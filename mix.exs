@@ -3,7 +3,7 @@ defmodule NavigationTree.Mixfile do
 
   def project do
     [app: :navigation_tree,
-     version: "0.1.1",
+     version: "0.1.2",
      deps_path: "../../deps",
      lockfile: "../../mix.lock",
      elixir: "~> 1.0",
