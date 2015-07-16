@@ -33,4 +33,24 @@ defmodule NavigationTree.Mixfile do
   defp deps do
     []
   end
+
+  defp description do
+    """
+    A navigation tree representation with helpers to generate HTML out of it - depending of userroles. 
+    Also creates nice HTML navbars for Bootstrap.
+    """
+  end
+  
+  defp package do
+    [# These are the default files included in the package
+     files: ["lib", "mix.exs", "README", "LICENSE", "test"],
+     contributors: ["Martin Gutsch"],
+     licenses: ["MIT"],
+     links: %{
+        "GitHub" => "https://github.com/gutschilla/elixir-navigation-tree.git"
+        # "Docs" => "http://ericmj.github.io/postgrex/"
+      }
+     ]
+  end
+
 end
