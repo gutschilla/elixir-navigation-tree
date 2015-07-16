@@ -7,14 +7,13 @@ defmodule NavigationTree.Mixfile do
      deps_path: "../../deps",
      lockfile: "../../mix.lock",
      elixir: "~> 1.0",
+     package: package,
+     description: description,
      deps: deps]
   end
 
-  # Configuration for the OTP application
-  #
-  # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger]]
+    []
   end
 
   # Dependencies can be Hex packages:
@@ -42,13 +41,12 @@ defmodule NavigationTree.Mixfile do
   end
   
   defp package do
-    [# These are the default files included in the package
+    [
      files: ["lib", "mix.exs", "README", "LICENSE", "test"],
      contributors: ["Martin Gutsch"],
      licenses: ["MIT"],
      links: %{
-        "GitHub" => "https://github.com/gutschilla/elixir-navigation-tree.git"
-        # "Docs" => "http://ericmj.github.io/postgrex/"
+        "GitHub" => "https://github.com/gutschilla/plug-session-memcached"
       }
      ]
   end
