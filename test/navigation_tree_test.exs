@@ -53,5 +53,20 @@ defmodule NavigationTreeTest do
     # there must be missing the admin section
     assert length( tree.children ) == 1
   end
+
+
+  test "as_html_for_admin" do 
+    tree = Navigation.Tree.allowed_tree([])
+    html = Navigation.Tree.as_html_for(["admin"])
+    assert String.match?( html, ~r/MYPrivate/ ) == false
+    assert String.match?( html, ~r/MYAdmin/   ) == true 
+  end
+  
+  test "as_html_for_nil" do 
+    tree = Navigation.Tree.allowed_tree([])
+    html = Navigation.Tree.as_html_for( nil )
+    assert String.match?( html, ~r/MYPrivate/ ) == false
+    assert String.match?( html, ~r/MYAdmin/   ) == false
+  end
   
 end

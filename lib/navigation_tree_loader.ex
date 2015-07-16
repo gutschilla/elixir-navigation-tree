@@ -28,6 +28,10 @@ defmodule NavigationTree.Loader do
             NavigationTree.allowed_tree( userroles, tree )
         end
 
+        def as_html_for( nil ) do
+          as_html_for([])
+        end
+
         def as_html_for( roles ) when is_list( roles ) do 
           allowed_tree( roles )
           |> NavigationTree.as_list( 0 )
