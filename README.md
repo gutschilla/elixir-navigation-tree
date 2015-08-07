@@ -1,5 +1,5 @@
 # DEPRECATION NOTICE
-This whole module will be changed to an Elixir-based thing. See `as-agent` branch 
+This whole module will be changed to an Elixir.Agent-based thing. See `as-agent` branch 
 
 # elixir-navigation-tree
 A navigation tree representation with helpers to generate HTML out of it - depending of userroles. Creates nice HTML navbars for Bootstrap.
