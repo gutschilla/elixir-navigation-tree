@@ -111,4 +111,43 @@ defmodule NavigationTree.Helper do
     |> Enum.find( fn item -> item != nil end )
   end
 
+  defp has_needed? node, roles do
+    needed = Enum.into node.roles, HashSet.new
+    having = Enum.into roles,      HashSet.new
+    # needed minus having shall be empty
+    result = Set.difference( needed, having )
+    Set.size( result ) == 0
+  end
+
+  @doc ~S"""
+  Recursivly walks the tree, removing all nodes that given roles do not satisfy.
+
+  ## Examples
+
+      iex> alias NavigationTree.Node, as: Node
+      nil
+
+      iex> NavigationTree.Agent.start_link %Node{name: "A", children: [%Node{name: "B", roles: ["b"], children: [%Node{name: "C", roles: ["c"]}]}]}
+      {:ok, pid }
+
+      iex> NavigationTree.Helper.allowed_tree NavigationTree.Agent.get.tree, ["a"]
+      %{children: [], controller: nil, name: "A", roles: [], url: "/a"}
+
+      iex> NavigationTree.Helper.allowed_tree NavigationTree.Agent.get.tree, ["b"]
+      %{children: [%{children: [], controller: nil, name: "B", roles: ["b"], url: "/a/b"}], controller: nil, name: "A", roles: [], url: "/a"}
+
+      iex> NavigationTree.Helper.allowed_tree NavigationTree.Agent.get.tree, ["c","b"]
+      %{children: [%{children: [%{children: [], controller: nil, name: "C", roles: ["b", "c"], url: "/a/b/c"}], controller: nil, name: "B", roles: ["b"], url: "/a/b"}], controller: nil, name: "A", roles: [], url: "/a"}
+
+  """
+  def allowed_tree( node, roles ) do
+    case has_needed? node, roles do
+      true -> %{ node |
+        children:  Enum.map( node.children, fn child -> allowed_tree( child, roles ) end  )
+          |> Enum.filter( fn child -> child != nil end )
+      }
+      false -> nil
+    end
+  end
+
 end
