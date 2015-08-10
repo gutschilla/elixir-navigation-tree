@@ -62,7 +62,7 @@ defmodule NavigationTree.Bootstrap do
   def item_as_html [ tag: tag, state: :close ] do
     "</#{ to_string tag }>"
   end
-  def item_as_html [ tag: :a, href: :toggle, text: text ] do
+  def item_as_html [ tag: :a, state: :autoclose, href: :toggle, text: text ] do
     ~s[<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">#{ text } <span class="caret"></span></a>]
   end
   def item_as_html [ tag: :a, state: :autoclose, href: href, text: text ] do
