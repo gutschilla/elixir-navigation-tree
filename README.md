@@ -1,30 +1,19 @@
 # NavigationTree.Agent
+An agent represing a navigation tree. The agent holds transformed configuration
+state.
 
-...
+Provides convenience wrappers to generate Twitter/bootstrap-freindly
+userrole-aware HTML out of this state through NavigationTree.Helper and
+NavigationTree.Bootstrap.
 
-## as HTML
+Navigation tree nodes are to be configured as NavigationTree.Node structs.
 
-Currently, this module spits out navigation bars for Bootstrap
+# Documentation 
+[Can be found here.](./doc/NavigationTree.Agent.html)
 
-### as_html(), as_html( user_id ), as_html( [ "role1", ..] )
+# Basics
 
-layout.eex
-```
-<html>
-    ...
-   <body>
+Add this project both to your dependecies and to your app list (including configuration). [..]
 
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <%= raw MyApp.NavigationTree.as_html_for( current_get_user_roles() ) %>
-      </div>
-    </nav>
-    
-    <div class="container">
-      <%= @inner %>
-    </div>
-
-  </body>
-
-</html>       
-```
+# LICENSE
+M.I.T.
