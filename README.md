@@ -9,7 +9,7 @@ NavigationTree.Bootstrap.
 Navigation tree nodes are to be configured as NavigationTree.Node structs.
 
 # Documentation 
-[Can be found here.](./doc/NavigationTree.Agent.html)
+[Can be found here.](http://hexdocs.pm/navigation_tree/0.3.1/)
 
 # Basics
 

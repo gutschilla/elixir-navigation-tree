@@ -3,10 +3,12 @@ defmodule NavigationTree.Mixfile do
 
   def project do
     [app: :navigation_tree,
-     version: "0.3.0",
+     version: "0.3.1",
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     package: package,
+     description: description,
      deps: deps]
   end
 
@@ -20,7 +22,7 @@ defmodule NavigationTree.Mixfile do
 
   # Dependencies can be Hex packages:
   #
-  #   {:mydep, "~> 0.3.0"}
+  #   {:mydep, "~> 0.3.0"}elixir-navigation-tree
   #
   # Or git/path repositories:
   #
@@ -30,5 +32,23 @@ defmodule NavigationTree.Mixfile do
   def deps do
     [{:earmark, "~> 0.1", only: :dev},
      {:ex_doc, "~> 0.7", only: :dev}]
+  end
+
+  defp description do
+    """
+    A navigation tree representation with helpers to generate HTML out of it - depending of userroles. 
+    Also creates nice HTML navbars for Bootstrap. Implemented as Agent to hold config state.
+    """
+  end
+
+  defp package do
+    [
+     files: ["lib", "mix.exs", "README", "LICENSE", "test", "doc"],
+     contributors: ["Martin Gutsch"],
+     licenses: ["MIT"],
+     links: %{
+        "GitHub" => "https://github.com/gutschilla/elixir-navigation-tree"
+      }
+     ]
   end
 end
