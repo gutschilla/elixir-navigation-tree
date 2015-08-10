@@ -1,72 +1,52 @@
-defmodule Navigation do
-
-  require NavigationTree.Loader
-  alias NavigationTree.Node, as: Node
-
-  NavigationTree.Loader.make_module(
-    Tree,
-    %Node{
-          name: "MYHome",
-          children: [
-              %Node{
-                  name: "MYLogin",
-                  url:  "/auth",
-              },
-              %Node{
-                  name: "MYPrivate",
-                  url:  "/private",
-                  roles: ["user"]
-              },
-              %Node{
-                  name: "MYAdmin",
-                  roles: ["admin"],
-                  children: [
-                      %Node{ name: "MYUsers" },
-                      %Node{ name: "MYRoles" },
-                  ]
-              }
-          ]
-      }, 
-      fn( user_id ) when is_integer( user_id ) ->
-        [ "admin", "role_" <> Integer.to_string( user_id ) ]
-      end
-  );
-
-end
-
 defmodule NavigationTreeTest do
   use ExUnit.Case
 
-  test "traversing the tree" do
-    tree = Navigation.Tree.tree;
-    assert tree.name == "MYHome";
-    {:ok, login } = Enum.fetch tree.children, 0;
-    assert login.name == "MYLogin";
-    # same in a complex notation
-    assert ( tree.children |> Enum.fetch(1) |> elem 1 ).name == "MYPrivate"
-  end
-  
-  test "allowed tree" do
-    tree       = Navigation.Tree.allowed_tree([])
-    admin_tree = Navigation.Tree.allowed_tree(["admin"]);
-    assert length( admin_tree.children ) == 2
-    # there must be missing the admin section
-    assert length( tree.children ) == 1
+  alias NavigationTree.Node, as: Node
+
+  defp root_node do    
+    %Node{
+      url:  "/", # this is important, otherwise all urls will start with "/home"
+      name: "Home",
+      children: [
+        %Node{
+          name: "Login",
+          url:  "/auth",
+        },
+        %Node{
+          name: "Admin",
+          roles: ["admin"],
+          children: [
+            %Node{ name: "Users", roles: ["user_admin"] },
+            %Node{ name: "Roles"},
+          ]
+        }
+      ]
+    }
   end
 
+  def init_node, do: NavigationTree.Agent.start_link( root_node )
+  def stop_node, do: NavigationTree.Agent.stop
 
-  test "as_html_for_admin" do 
-    tree = Navigation.Tree.allowed_tree([])
-    html = Navigation.Tree.as_html_for(["admin"])
-    assert String.match?( html, ~r/MYPrivate/ ) == false
-    assert String.match?( html, ~r/MYAdmin/   ) == true 
+  test "start/stop node" do
+    { :ok, _pid } = init_node 
+    :ok = stop_node
   end
-  
-  test "as_html_for_nil" do 
-    tree = Navigation.Tree.allowed_tree([])
-    html = Navigation.Tree.as_html_for( nil )
-    assert String.match?( html, ~r/MYPrivate/ ) == false
-    assert String.match?( html, ~r/MYAdmin/   ) == false
+    
+  test "Helper.thaw" do
+    { :ok, _pid } = init_node # start again for later tests
+    %{ tree: tree, paths: paths, root_node: my_root_node } = NavigationTree.Agent.get
+    assert my_root_node == root_node
+    assert length( Map.keys paths ) == 5 # home, login, admin, admin/users, admin/roles
+    assert tree.name == "Home"
+    assert Enum.at( tree.children, 0 ).name == "Login" 
+    assert Enum.at( tree.children, 1 ).name == "Admin" 
   end
-  
+
+  test "Agent.node_of and roles" do
+    { :ok, _pid } = init_node # start again for later tests
+    assert NavigationTree.Agent.node_of(["Home", "Login"]) == NavigationTree.Agent.node_of("/auth")
+    assert NavigationTree.Agent.node_of(["Home", "Admin", "Users"]).name == "Users"
+    assert NavigationTree.Agent.node_of(["Home", "Admin", "Users"]).roles == ["admin", "user_admin"]
+  end
+
 end
