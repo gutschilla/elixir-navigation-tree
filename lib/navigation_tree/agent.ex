@@ -1,6 +1,6 @@
 defmodule NavigationTree.Agent do
 
-@vsn "0.3.0"
+@vsn "0.3.1"
 @moduledoc """
 An agent represing a navigation tree. The agent holds transformed configuration
 state.
@@ -93,6 +93,13 @@ Returns node at given path. Path must be a either
  - An URL string. URL must be absolute e.g. "/admin/users"
 """
 def node_of( url ) when is_binary( url ) do
+  node_of( path_of url )
+end
+
+@doc """
+Returns node path for given url
+"""
+def path_of( url ) when is_binary( url ) do
   data = get
   [ paths, urls ] = data.paths |> Map.to_list |> List.zip
   index = urls |> Tuple.to_list |> Enum.find_index( fn find_url -> find_url == url end  )
@@ -100,7 +107,6 @@ def node_of( url ) when is_binary( url ) do
     nil -> nil
     _   -> Enum.at( Tuple.to_list( paths ), index )
   end
-  node_of( path )
 end
 
 @doc """
@@ -108,7 +114,9 @@ Return an HTML string suitable to fit in a navbar in a Twitter/Bootstrap
 environment. 
 
  - roles must be a list of user roles (strings)
- - atom2 must be :bootstrap (currently the only supported framework)
+ - atom2 must be either
+   - :bootstrap (currently the only supported framework)
+   - a module implementing tree_to_html( tree, roles )
 
 """
 def as_html( roles, :bootstrap ) when is_list( roles ) do
