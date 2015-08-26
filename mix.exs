@@ -3,7 +3,7 @@ defmodule NavigationTree.Mixfile do
 
   def project do
     [app: :navigation_tree,
-     version: "0.3.3",
+     version: "0.4.0",
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -16,13 +16,12 @@ defmodule NavigationTree.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger],
-     mod: {NavigationTree, []}]
+    [applications: [:logger]]
   end
 
   # Dependencies can be Hex packages:
   #
-  #   {:mydep, "~> 0.3.0"}elixir-navigation-tree
+  #   {:mydep, "~> 0.3.0"}
   #
   # Or git/path repositories:
   #
