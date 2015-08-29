@@ -1,6 +1,6 @@
 defmodule NavigationTree.Agent do
 
-@vsn "0.3.1"
+@vsn "0.4.1"
 @moduledoc """
 An agent represing a navigation tree. The agent holds transformed configuration
 state.
@@ -103,7 +103,7 @@ def path_of( url ) when is_binary( url ) do
   data = get
   [ paths, urls ] = data.paths |> Map.to_list |> List.zip
   index = urls |> Tuple.to_list |> Enum.find_index( fn find_url -> find_url == url end  )
-  path = case index do
+  case index do
     nil -> nil
     _   -> Enum.at( Tuple.to_list( paths ), index )
   end
@@ -121,6 +121,42 @@ environment.
 """
 def as_html( roles, :bootstrap ) when is_list( roles ) do
   NavigationTree.Bootstrap.tree_to_html get.tree, roles
+end
+
+@doc """
+Returns the next sibling (next child of parent) or nil
+"""
+def next_sibling( path ) when is_list( path ) do
+    next_sibling path, 1
+end
+# node w/o parent (the root node) has no siblings
+def next_sibling( [ _single ], _num ), do: nil
+
+def next_sibling( path, num, op \\ &Elixir.Kernel.+/2 ) do
+  node = node_of( path )
+  [ _node_name | reversed_parent_path ] = Enum.reverse path
+  parent = node_of( Enum.reverse reversed_parent_path )
+  node_index = Enum.find_index parent.children, fn child ->
+    child == node
+  end
+  
+  # Enum.at [1,2,3], -1 whould return 3, but I want it to be nil
+  if ( op == &Elixir.Kernel.-/2 ) && ( num > node_index ) do
+    nil
+  else
+    Enum.at parent.children, op.( node_index, num )
+  end
+
+end
+
+@doc """
+Returns the previous sibling (previous child of parent) or nil
+"""
+def previous_sibling( path ) do
+  previous_sibling( path, 1 )
+end
+def previous_sibling( path, num ) do
+  next_sibling( path, num, &Elixir.Kernel.-/2 )
 end
 
 end

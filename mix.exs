@@ -3,7 +3,7 @@ defmodule NavigationTree.Mixfile do
 
   def project do
     [app: :navigation_tree,
-     version: "0.4.0",
+     version: "0.4.1",
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
