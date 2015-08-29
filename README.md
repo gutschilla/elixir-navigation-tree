@@ -47,13 +47,16 @@ NavigationTree.Agent.get.root_node (initoal config)
 NavigationTree.Agent.node_of ["Home","Admin"]
 # same as
 NavigationTree.Agent.node_of "/admin"
+# the inverse of node_of is path_of
+NavigationTree.Agent.path_of "/admin" # returns ["Home","Admin"]
 
-# SIBLINGS: returns next/previous node afert "Users" in "Amind" (or nil)
+# parent node
+NavigationTree.Agent.parent of ["Home","Admin", "Users"]
+
+# returns next/previous node after "Users" in "Amind"
 NavigationTree.Agent.next_sibling ["Home","Admin", "Users"]
 NavigationTree.Agent.previous_sibling ["Home","Admin", "Users"]
  
-# reverse
-NavigationTree.Agent.path_of "/admin" # returns ["Home","Admin"]
 
 # HTML
 NavigationTree.Agent.as_html [], :bootstrap

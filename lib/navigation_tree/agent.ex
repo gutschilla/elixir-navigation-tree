@@ -1,6 +1,6 @@
 defmodule NavigationTree.Agent do
 
-@vsn "0.4.1"
+@vsn "0.4.2"
 @moduledoc """
 An agent represing a navigation tree. The agent holds transformed configuration
 state.
@@ -97,7 +97,7 @@ def node_of( url ) when is_binary( url ) do
 end
 
 @doc """
-Returns node path for given url
+Returns node path for given node or url
 """
 def path_of( url ) when is_binary( url ) do
   data = get
@@ -108,6 +108,7 @@ def path_of( url ) when is_binary( url ) do
     _   -> Enum.at( Tuple.to_list( paths ), index )
   end
 end
+def path_of( node ) when is_map( node ), do: path_of node.url
 
 @doc """
 Return an HTML string suitable to fit in a navbar in a Twitter/Bootstrap
@@ -124,6 +125,17 @@ def as_html( roles, :bootstrap ) when is_list( roles ) do
 end
 
 @doc """
+Returns node's parent or nil
+"""
+def parent_of( node ) when is_map( node ) do
+  node |> path_of |> parent_of
+end
+def parent_of( path ) when is_list( path ) do
+  [ _node_name | reversed_parent_path ] = Enum.reverse path
+  node_of( Enum.reverse reversed_parent_path )
+end
+
+@doc """
 Returns the next sibling (next child of parent) or nil
 """
 def next_sibling( path ) when is_list( path ) do
@@ -133,9 +145,8 @@ end
 def next_sibling( [ _single ], _num ), do: nil
 
 def next_sibling( path, num, op \\ &Elixir.Kernel.+/2 ) do
-  node = node_of( path )
-  [ _node_name | reversed_parent_path ] = Enum.reverse path
-  parent = node_of( Enum.reverse reversed_parent_path )
+  parent = parent_of path
+  node   = node_of( path )
   node_index = Enum.find_index parent.children, fn child ->
     child == node
   end

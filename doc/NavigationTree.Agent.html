@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     
-        <title>NavigationTree.Agent – navigation_tree v0.4.0</title>
+        <title>NavigationTree.Agent – navigation_tree v0.4.2</title>
       
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc">
@@ -24,7 +24,7 @@
 
   <h1 id="full_list_header">
     
-      navigation_tree v0.4.0
+      navigation_tree v0.4.2
     
   </h1>
 
@@ -74,7 +74,7 @@
         <button type="button" class="btn btn-default btn-sm" data-toggle="offcanvas">
           <span class="glyphicon glyphicon-menu-hamburger"></span>
         </button>
-        navigation_tree v0.4.0 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="NavigationTree.html#content">NavigationTree</a> &rarr; <a href="NavigationTree.Agent.html#content">Agent</a>
+        navigation_tree v0.4.2 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="NavigationTree.html#content">NavigationTree</a> &rarr; <a href="NavigationTree.Agent.html#content">Agent</a>
       </div>
 
       <h1>
@@ -164,14 +164,41 @@ environment</p>
   <td class="summary_synopsis"></td>
 </tr>
 <tr>
+  <td class="summary_signature"><a href="#next_sibling/1">next_sibling(path)</a></td>
+  <td class="summary_synopsis"><p>Returns the next sibling (next child of parent) or nil</p>
+</td>
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#next_sibling/2">next_sibling(list1, num)</a></td>
+  <td class="summary_synopsis"></td>
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#next_sibling/3">next_sibling(path, num, op \\ :erlang.make_fun(:erlang, :+, 2))</a></td>
+  <td class="summary_synopsis"></td>
+</tr>
+<tr>
   <td class="summary_signature"><a href="#node_of/1">node_of(path)</a></td>
   <td class="summary_synopsis"><p>Returns node at given path. Path must be a either</p>
 </td>
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#path_of/1">path_of(url)</a></td>
-  <td class="summary_synopsis"><p>Returns node path for given url</p>
+  <td class="summary_signature"><a href="#parent_of/1">parent_of(node)</a></td>
+  <td class="summary_synopsis"><p>Returns node’s parent or nil</p>
 </td>
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#path_of/1">path_of(url)</a></td>
+  <td class="summary_synopsis"><p>Returns node path for given node or url</p>
+</td>
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#previous_sibling/1">previous_sibling(path)</a></td>
+  <td class="summary_synopsis"><p>Returns the previous sibling (previous child of parent) or nil</p>
+</td>
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#previous_sibling/2">previous_sibling(path, num)</a></td>
+  <td class="summary_synopsis"></td>
 </tr>
 <tr>
   <td class="summary_signature"><a href="#start_link/1">start_link(root_node)</a></td>
@@ -249,6 +276,52 @@ environment. </p>
   
 </section>
 <section class="detail">
+  <div class="detail_header" id="next_sibling/1">
+    <span class="signature"><strong>next_sibling(path)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#next_sibling/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Returns the next sibling (next child of parent) or nil</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="next_sibling/2">
+    <span class="signature"><strong>next_sibling(list1, num)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#next_sibling/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="next_sibling/3">
+    <span class="signature"><strong>next_sibling(path, num, op \\ :erlang.make_fun(:erlang, :+, 2))</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#next_sibling/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
   <div class="detail_header" id="node_of/1">
     <span class="signature"><strong>node_of(path)</strong></span>
     <div class="detail_header_links">
@@ -271,6 +344,22 @@ environment. </p>
   
 </section>
 <section class="detail">
+  <div class="detail_header" id="parent_of/1">
+    <span class="signature"><strong>parent_of(node)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#parent_of/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Returns node’s parent or nil</p>
+
+  </section>
+  
+</section>
+<section class="detail">
   <div class="detail_header" id="path_of/1">
     <span class="signature"><strong>path_of(url)</strong></span>
     <div class="detail_header_links">
@@ -281,8 +370,39 @@ environment. </p>
   </div>
   
   <section class="docstring">
-    <p>Returns node path for given url</p>
+    <p>Returns node path for given node or url</p>
 
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="previous_sibling/1">
+    <span class="signature"><strong>previous_sibling(path)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#previous_sibling/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Returns the previous sibling (previous child of parent) or nil</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="previous_sibling/2">
+    <span class="signature"><strong>previous_sibling(path, num)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#previous_sibling/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
   </section>
   
 </section>

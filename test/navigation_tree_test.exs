@@ -1,27 +1,8 @@
 defmodule NavigationTreeTest do
   use ExUnit.Case
 
-  alias NavigationTree.Node, as: Node
-
   defp root_node do    
-    %Node{
-      url:  "/", # this is important, otherwise all urls will start with "/home"
-      name: "Home",
-      children: [
-        %Node{
-          name: "Login",
-          url:  "/auth",
-        },
-        %Node{
-          name: "Admin",
-          roles: ["admin"],
-          children: [
-            %Node{ name: "Users", roles: ["user_admin"] },
-            %Node{ name: "Roles"},
-          ]
-        }
-      ]
-    }
+    NavigationTree.Example.config
   end
 
   def init_node, do: NavigationTree.Agent.start_link( root_node )
@@ -48,5 +29,25 @@ defmodule NavigationTreeTest do
     assert NavigationTree.Agent.node_of(["Home", "Admin", "Users"]).name == "Users"
     assert NavigationTree.Agent.node_of(["Home", "Admin", "Users"]).roles == ["admin", "user_admin"]
   end
+
+  test "Agent.parent_of" do
+    { :ok, _pid } = init_node # start again for later tests
+    admin = ( NavigationTree.Agent.parent_of ["Home", "Admin", "Users" ] )
+    assert admin.name == "Admin"
+    assert NavigationTree.Agent.path_of( admin.url ) == ["Home", "Admin"]
+  end
+
+  test "Agent.next_sibling" do
+    { :ok, _pid } = init_node # start again for later tests
+    roles = NavigationTree.Agent.next_sibling ["Home", "Admin", "Users" ]
+    assert roles.name == "Roles"
+    assert NavigationTree.Agent.path_of( roles.url ) == ["Home", "Admin", "Roles"]
+    assert ( NavigationTree.Agent.next_sibling ["Home", "Admin", "Roles" ] ) == nil
+    
+    login = NavigationTree.Agent.previous_sibling ["Home", "Admin"]
+    assert login.name == "Login"
+  end
+
+    
 
 end

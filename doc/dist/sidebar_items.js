@@ -2,7 +2,7 @@ sidebarNodes = {
   "modules": [
     {"id": "NavigationTree"
 },{"id": "NavigationTree.Agent",
-"docs": ["as_html/2","get/0","init_opts/1","node_of/1","path_of/1","start_link/1","stop/0"]
+"docs": ["as_html/2","get/0","init_opts/1","next_sibling/1","next_sibling/2","next_sibling/3","node_of/1","parent_of/1","path_of/1","previous_sibling/1","previous_sibling/2","start_link/1","stop/0"]
 },{"id": "NavigationTree.Bootstrap",
 "docs": ["as_html/1","as_list/1","as_list/2","item_as_html/1","li_children/2","tree_to_html/1","tree_to_html/2"]
 },{"id": "NavigationTree.Example",
