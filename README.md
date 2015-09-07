@@ -1,6 +1,6 @@
-# NavigationTree.Agent and NavigationTree.Server
+# NavigationTree.Agent
 An agent represing a navigation tree. The agent holds transformed configuration
-state. NavigationTree.Server does exactly the same but is implemented as GenServer.
+state. 
 
 Provides convenience wrappers to generate Twitter/bootstrap-freindly
 userrole-aware HTML out of this state through NavigationTree.Helper and
@@ -30,7 +30,7 @@ the node's name or the specified controller namde in this node's config
 
 # Basic usage
 - create a config module or just use NavigationTree.Example
-- Startup Agent or Server, possibly in your application setup
+- Startup Agent possibly in your application setup
 - create you HTML generator or use the shipped NavigationTree.Bootstrap module
 - enjoy!
 
