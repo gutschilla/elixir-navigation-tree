@@ -1,6 +1,6 @@
 defmodule NavigationTree.Agent do
 
-@vsn "0.4.2"
+@vsn "0.4.3"
 @moduledoc """
 An agent represing a navigation tree. The agent holds transformed configuration
 state.
@@ -95,10 +95,12 @@ Returns node at given path. Path must be a either
 def node_of( url ) when is_binary( url ) do
   node_of( path_of url )
 end
+def node_of( nil ), do: nil
 
 @doc """
 Returns node path for given node or url
 """
+def path_of( node ) when is_map( node ), do: path_of node.url
 def path_of( url ) when is_binary( url ) do
   data = get
   [ paths, urls ] = data.paths |> Map.to_list |> List.zip
@@ -108,7 +110,6 @@ def path_of( url ) when is_binary( url ) do
     _   -> Enum.at( Tuple.to_list( paths ), index )
   end
 end
-def path_of( node ) when is_map( node ), do: path_of node.url
 
 @doc """
 Return an HTML string suitable to fit in a navbar in a Twitter/Bootstrap
@@ -168,6 +169,32 @@ def previous_sibling( path ) do
 end
 def previous_sibling( path, num ) do
   next_sibling( path, num, &Elixir.Kernel.-/2 )
+end
+
+@doc """
+Same as node_of( url )m but tries to successively cut away parts from the end to
+find a node.
+
+Example: nearest_node_of("/foo/bar/baz") would return node_of("/foo") if there
+was a "/foo" node, but neither "/foo/bar" nor "/foo/bar/baz".
+
+"""
+def nearest_node_of( "" ) do
+  node_of "/" # try again with "/" which may ultimately fail
+end
+def nearest_node_of( path_info ) do
+  case node_of( path_info ) do
+    nil  -> nearest_node_of( String.replace( path_info, ~r(/[^/]+$), "" ) )
+    node -> node
+  end
+end
+
+@doc """
+Convenience method to retrieve nearest_node_of current connection's path
+"""
+def current_node( conn ) do
+  navi_url = "/" <> Enum.join conn.path_info, "/"
+  nearest_node_of navi_url
 end
 
 end
