@@ -42,7 +42,7 @@ defmodule NavigationTree.Mixfile do
 
   defp package do
     [
-     files: ["lib", "mix.exs", "README", "LICENSE", "test", "doc"],
+     files: ["lib", "mix.exs", "README", "LICENSE", "test"], 
      contributors: ["Martin Gutsch"],
      licenses: ["MIT"],
      links: %{
